@@ -1,0 +1,451 @@
+[
+    {
+        "id": "17de621081de59f3",
+        "type": "tab",
+        "label": "Environement Astronomy",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "17bdacd7e078e73a",
+        "type": "inject",
+        "z": "17de621081de59f3",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "17766491d8ff2173",
+                "decad10db1bf110f"
+            ]
+        ]
+    },
+    {
+        "id": "887c1157ef55d8e7",
+        "type": "file",
+        "z": "17de621081de59f3",
+        "name": "",
+        "filename": "/data/astronomy/create_env.sh",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 650,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "17766491d8ff2173",
+        "type": "template",
+        "z": "17de621081de59f3",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "#!/bin/bash \n\ncd /data/astronomy\nls -l\npython3 -m venv envtest\nsource envtest/bin/activate\nls -l\nwhich python",
+        "output": "str",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "887c1157ef55d8e7"
+            ]
+        ]
+    },
+    {
+        "id": "4b1da4853710ee2b",
+        "type": "exec",
+        "z": "17de621081de59f3",
+        "command": "chmod u+x /data/astronomy/create_env.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "make create_env.sh file executable",
+        "x": 420,
+        "y": 180,
+        "wires": [
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ]
+        ]
+    },
+    {
+        "id": "80c7fe12fa11990d",
+        "type": "debug",
+        "z": "17de621081de59f3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "39955367fcdd301a",
+        "type": "exec",
+        "z": "17de621081de59f3",
+        "command": "bash /data/astronomy/create_env.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "execute create_env.sh",
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ]
+        ]
+    },
+    {
+        "id": "85346694abebb450",
+        "type": "exec",
+        "z": "17de621081de59f3",
+        "command": "chmod u+x /data/astronomy/install_packages.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "make install_packages.sh file executable",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ]
+        ]
+    },
+    {
+        "id": "c57eaa5ec901ce63",
+        "type": "exec",
+        "z": "17de621081de59f3",
+        "command": "bash /data/astronomy/install_packages.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "execute /install_packages.sh",
+        "x": 400,
+        "y": 620,
+        "wires": [
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ],
+            [
+                "8971c231f96b0d11"
+            ]
+        ]
+    },
+    {
+        "id": "961fd5ef382a95bc",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "create bash file that creates and activates venv",
+        "info": "In the template node we create a bash file that will create a virtual python environment and activate the environment.\n\n#!/bin/bash \n\ncd /data\nls -l\npython3 -m venv envtest\nsource envtest/bin/activate\nls -l\nwhich python",
+        "x": 460,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e3e375f8dcb1b7f6",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "make the bash file executable",
+        "info": "",
+        "x": 400,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7271c3528db60ed5",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "make the bash file executable",
+        "info": "",
+        "x": 400,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ab63103871f56947",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "execute the bash file",
+        "info": "",
+        "x": 370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5fd91c506df560c7",
+        "type": "file",
+        "z": "17de621081de59f3",
+        "name": "",
+        "filename": "/data/astronomy/install_packages.sh",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 670,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a696ffc7af03bc63",
+        "type": "template",
+        "z": "17de621081de59f3",
+        "name": "file to install packages",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "#!/bin/bash\n\n\n\n# Naviguer vers le répertoire de travail\ncd /data/astronomy || { echo \"Le répertoire /data/astronomy n'existe pas.\"; exit 1; }\n\n# Activer l'environnement virtuel\nif [ -d \"envtest\" ]; then\n    source envtest/bin/activate\nelse\n    echo \"L'environnement virtuel envtest n'existe pas.\"\n    exit 1\nfi\n\n# Lister les fichiers dans le répertoire\nls -l\n\n# Vérifier l'emplacement de Python\nwhich python\n\n# Mettre à jour pip et installer les packages nécessaires\npip3 install --upgrade pip\npip3 install skyfield matplotlib pandas astronomy astronomy-engine datetime numpy unzip\n\n\n# Vérifier si le fichier de430.bsp existe déjà\nif [ ! -f de430.bsp ]; then\n    curl -O https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430.bsp\nelse\n    echo \"Le fichier de430.bsp existe déjà.\"\nfi\n",
+        "output": "str",
+        "x": 380,
+        "y": 400,
+        "wires": [
+            [
+                "5fd91c506df560c7"
+            ]
+        ]
+    },
+    {
+        "id": "44771b76be4879b0",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "create bash file that installs packages",
+        "info": "",
+        "x": 430,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "12c8ee153eb95e50",
+        "type": "comment",
+        "z": "17de621081de59f3",
+        "name": "execute the bash file to install packages",
+        "info": "",
+        "x": 430,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "decad10db1bf110f",
+        "type": "delay",
+        "z": "17de621081de59f3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "4b1da4853710ee2b",
+                "988acb9453dbc872"
+            ]
+        ]
+    },
+    {
+        "id": "988acb9453dbc872",
+        "type": "delay",
+        "z": "17de621081de59f3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "39955367fcdd301a",
+                "acbda842c9390c60"
+            ]
+        ]
+    },
+    {
+        "id": "acbda842c9390c60",
+        "type": "delay",
+        "z": "17de621081de59f3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "a696ffc7af03bc63",
+                "622619c939557f78"
+            ]
+        ]
+    },
+    {
+        "id": "622619c939557f78",
+        "type": "delay",
+        "z": "17de621081de59f3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "85346694abebb450",
+                "04f09193473de170"
+            ]
+        ]
+    },
+    {
+        "id": "04f09193473de170",
+        "type": "delay",
+        "z": "17de621081de59f3",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 620,
+        "wires": [
+            [
+                "c57eaa5ec901ce63"
+            ]
+        ]
+    },
+    {
+        "id": "d7f824c7fc646cd0",
+        "type": "file",
+        "z": "17de621081de59f3",
+        "name": "",
+        "filename": "/data/astronomy/debug/debug.log",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1120,
+        "y": 460,
+        "wires": [
+            [
+                "80c7fe12fa11990d"
+            ]
+        ]
+    },
+    {
+        "id": "8971c231f96b0d11",
+        "type": "function",
+        "z": "17de621081de59f3",
+        "name": "horodatage",
+        "func": "const moment = global.get('moment');\nlet date = moment().tz(\"Europe/Paris\").format('DD/MM/YYYY, HH:mm:ss');\nmsg.payload = date + \"\\n\" + msg.payload;\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 400,
+        "wires": [
+            [
+                "d7f824c7fc646cd0"
+            ]
+        ]
+    }
+]
