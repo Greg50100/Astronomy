@@ -21,3 +21,5 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 - [Matplotlib](https://matplotlib.org/)
 - [SciPy](https://scipy.org/)
 - [Astropy](https://www.astropy.org/)
+
+<a href="https://www.buymeacoffee.com/gregorychau" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
