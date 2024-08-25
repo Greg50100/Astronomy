@@ -22,4 +22,12 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 - [SciPy](https://scipy.org/)
 - [Astropy](https://www.astropy.org/)
 
+## Auteurs
+
+- **Greg50100** - *Développeur principal* - Profil GitHub
+
+## Remerciements
+
+Certains scripts python ont été créés par David ALBERTO du blog https://www.astrolabe-science.fr/
+
 <a href="https://www.buymeacoffee.com/gregorychau" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
