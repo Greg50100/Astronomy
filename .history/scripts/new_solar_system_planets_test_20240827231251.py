@@ -227,11 +227,13 @@ for planet, id in planets.items():
 
 
     # Calculate angular diameter
-    angular_diameter_arcseconds, planet_diameter_km = calculate_angular_diameter(planet, distance_au)
+    angular_diameter_arcseconds = calculate_angular_diameter(planet, distance_au).angular_diameter_arcseconds
 
     # Convert to value and print
     angular_diameter_value = angular_diameter_arcseconds
     print(f"- Angular diameter: {angular_diameter_value:.2f} arcseconds")
+
+    planet_diameter_km = calculate_angular_diameter(planet, distance_au).planet_diameter_km
 
     print(f"## {planet.capitalize()} Information")
     print(f"### Summary")
@@ -274,5 +276,8 @@ for planet, id in planets.items():
     print(f"- Light travel time (hours): {light_travel_time_hours:.2f}")
     print(f"- Galactic coordinates: l={galactic_l:.2f}, b={galactic_b:.2f}")
     print(f"- Angular diameter: {angular_diameter_arcseconds:.2f} arcseconds")
-    print(f"- Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
     print("---")
+
+    print(f"Distance AU: {distance_au}")
+    print(f"Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
+    print(f"Calculated Angular diameter: {angular_diameter_arcseconds}")

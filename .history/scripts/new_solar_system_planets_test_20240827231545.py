@@ -274,5 +274,8 @@ for planet, id in planets.items():
     print(f"- Light travel time (hours): {light_travel_time_hours:.2f}")
     print(f"- Galactic coordinates: l={galactic_l:.2f}, b={galactic_b:.2f}")
     print(f"- Angular diameter: {angular_diameter_arcseconds:.2f} arcseconds")
-    print(f"- Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
     print("---")
+
+    print(f"Distance AU: {distance_au}")
+    print(f"Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
+    print(f"Calculated Angular diameter: {angular_diameter_arcseconds}")

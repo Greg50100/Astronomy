@@ -152,7 +152,7 @@ def calculate_angular_diameter(planet, distance_au):
     
     angular_diameter_radians = diameter_km / distance_km
     angular_diameter_arcseconds = angular_diameter_radians * 206265
-    return angular_diameter_arcseconds, planet_diameter_km
+    return angular_diameter_arcseconds
 
 # Define the location of Cherbourg
 cherbourg = get_location(49.65, -1.62)
@@ -225,13 +225,9 @@ for planet, id in planets.items():
     # Convert to galactic coordinates
     galactic_l, galactic_b = convert_to_galactic_coordinates(ra, dec)
 
-
     # Calculate angular diameter
-    angular_diameter_arcseconds, planet_diameter_km = calculate_angular_diameter(planet, distance_au)
-
-    # Convert to value and print
-    angular_diameter_value = angular_diameter_arcseconds
-    print(f"- Angular diameter: {angular_diameter_value:.2f} arcseconds")
+    angular_diameter_arcseconds = calculate_angular_diameter(planet, distance_au)
+    print(f"Calculated angular diameter: {angular_diameter_arcseconds}")
 
     print(f"## {planet.capitalize()} Information")
     print(f"### Summary")
@@ -273,6 +269,9 @@ for planet, id in planets.items():
     print(f"- Geocentric (gx, gy, gz): ({gx:.2f}, {gy:.2f}, {gz:.2f})")
     print(f"- Light travel time (hours): {light_travel_time_hours:.2f}")
     print(f"- Galactic coordinates: l={galactic_l:.2f}, b={galactic_b:.2f}")
-    print(f"- Angular diameter: {angular_diameter_arcseconds:.2f} arcseconds")
-    print(f"- Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
+    print(f"- Angular diameter: {float(angular_diameter_arcseconds):.2f} arcseconds")
     print("---")
+
+    print(f"Distance AU: {distance_au}")
+    print(f"Planet diameter (km): {planet_diameter_km.get(planet, 'Not found')}")
+    print(f"Calculated Angular diameter: {angular_diameter_arcseconds}")
