@@ -1,7 +1,6 @@
 from skyfield.api import N, W, load, wgs84, PlanetaryConstants
-from skyfield import almanac, eclipselib
+from skyfield import almanac
 from datetime import timedelta
-from dateutil.relativedelta import relativedelta
 import pytz
 from math import cos
 
@@ -13,7 +12,6 @@ dt = t.utc_datetime()
 t0 = ts.utc(dt.year, dt.month, dt.day)
 t1 = ts.utc((dt + timedelta(days=1)).year, (dt + timedelta(days=1)).month, (dt + timedelta(days=1)).day)
 t2 = ts.utc((dt + timedelta(days=2)).year, (dt + timedelta(days=2)).month, (dt + timedelta(days=2)).day)
-t365 = ts.utc((dt + relativedelta(years=1)).year, (dt + relativedelta(years=1)).month, (dt + relativedelta(years=1)).day)
 
 eph = load('de421.bsp')
 earth = eph['earth']
@@ -93,78 +91,21 @@ def get_moon_libration(t):
     lon_degrees = (lon.degrees + 180.0) % 360.0 - 180.0
     return lon_degrees, lat_degrees
 
-def get_min_moon_altitude(t):
-    min_altitude = None
-    min_time = None
-    min_azimuth = None
+def get_observing_moon_location(t):
+    cherbourg_moon = moon + pc.build_latlon_degrees(frame, 49.6386, -1.6163)
+    apparent = cherbourg_moon.at(t).observe(earth).apparent()
+    alt, az, d = apparent.altaz()
+    return alt, az, d
 
-    # Vérifier l'altitude de la Lune toutes les 1 minutes pendant 24 heures
-    for minutes in range(0, 24 * 60, 1):
-        t_check = t.utc_datetime() + timedelta(minutes=minutes)
-        t_skyfield = ts.utc(t_check.year, t_check.month, t_check.day, t_check.hour, t_check.minute)
-        alt, az, _ = get_moon_altaz(t_skyfield)
-        if min_altitude is None or alt.degrees < min_altitude:
-            min_altitude = alt.degrees
-            min_time = t_check
-            min_azimuth = az.degrees
+p = (earth - moon).at(t)
+lat, lon, distance = p.frame_latlon(frame)
+lon_degrees = (lon.degrees + 180.0) % 360.0 - 180.0
+print('Libration in latitude: {:.3f}'.format(lat.degrees))
+print('Libration in longitude: {:.3f}'.format(lon_degrees))
 
-    return min_time, min_azimuth, min_altitude
 
-def get_max_moon_altitude(t):
-    max_altitude = None
-    max_time = None
-    max_azimuth = None
 
-    # Vérifier l'altitude de la Lune toutes les 1 minutes pendant 24 heures
-    for minutes in range(0, 24 * 60, 1):
-        t_check = t.utc_datetime() + timedelta(minutes=minutes)
-        t_skyfield = ts.utc(t_check.year, t_check.month, t_check.day, t_check.hour, t_check.minute)
-        alt, az, _ = get_moon_altaz(t_skyfield)
-        if max_altitude is None or alt.degrees > max_altitude:
-            max_altitude = alt.degrees
-            max_time = t_check
-            max_azimuth = az.degrees
 
-    return max_time, max_azimuth, max_altitude
-
-def get_moon_phase(t):
-    phase_angle = get_moon_phase_angle(t)
-    illumination = get_moon_illumination(t)
-    if phase_angle < 45:
-        return "New Moon"
-    elif phase_angle < 135:
-        if illumination < 0.5:
-            return "First Quarter"
-        else:
-            return "Last Quarter"
-    elif phase_angle < 225:
-        return "Full Moon"
-    else:
-        if illumination < 0.5:
-            return "Last Quarter"
-        else:
-            return "First Quarter"
-        
-def get_lunar_eclipse(t0, t365):
-    t, y, details = eclipselib.lunar_eclipses(t0, t365, eph)
-    return t, y, details
-
-# Obtenir les résultats de l'éclipse lunaire
-times, types, details = get_lunar_eclipse(t0, t365)
-
-# Afficher les résultats
-eclipse_type_dict = {1: "Partielle", 2: "Totale"}
-for i in range(len(times)):
-    print(f"Éclipse {i+1}:")
-    print(f"  Type: {eclipse_type_dict.get(types[i], 'Inconnu')}")
-    print(f"  Temps (UTC): {times[i].utc_strftime('%Y-%m-%d %H:%M')}")
-    print(f"  Approche la plus proche (radians): {details['closest_approach_radians'][i]}")
-    print(f"  Rayon de la lune (radians): {details['moon_radius_radians'][i]}")
-    print(f"  Rayon de la pénombre (radians): {details['penumbra_radius_radians'][i]}")
-    print(f"  Rayon de l'ombre (radians): {details['umbra_radius_radians'][i]}")
-    print(f"  Magnitude umbrale: {details['umbral_magnitude'][i]}")
-    print(f"  Magnitude pénumbrale: {details['penumbral_magnitude'][i]}")
-    print()
 
 next_moonrise, next_moonset = get_next_moonrise_moonset(cherbourg, t0, t2)
 
@@ -179,6 +120,6 @@ print(f"Current Moon Phase Angle: {get_moon_phase_angle(t)} degrees")
 print(f"Current Moon Illumination: {100-get_moon_illumination(t)*100:.2f}%")
 print(f"Current Moon Libration Longitude: {get_moon_libration(t)[0]:.3f} degrees")
 print(f"Current Moon Libration Latitude: {get_moon_libration(t)[1]:.3f} degrees")
-print(f"Current Moon Phase: {get_moon_phase(t)}")
-print(f"Lunar Eclipse: {get_lunar_eclipse(t0, t365)[0][0].utc_strftime('%Y-%m-%d %H:%M')}, y={get_lunar_eclipse(t0, t365)[1][0]}, {eclipselib.LUNAR_ECLIPSES[get_lunar_eclipse(t0, t365)[1][0]]}")
+print(f"Current Moon Altitude: {get_observing_moon_location(t)[0].degrees:.2f} degrees above the horizon")
+print(f"Current Moon Azimuth: {get_observing_moon_location(t)[1].degrees:.2f} degrees above the horizon")
 

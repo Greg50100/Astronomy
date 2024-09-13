@@ -181,4 +181,5 @@ print(f"Current Moon Libration Longitude: {get_moon_libration(t)[0]:.3f} degrees
 print(f"Current Moon Libration Latitude: {get_moon_libration(t)[1]:.3f} degrees")
 print(f"Current Moon Phase: {get_moon_phase(t)}")
 print(f"Lunar Eclipse: {get_lunar_eclipse(t0, t365)[0][0].utc_strftime('%Y-%m-%d %H:%M')}, y={get_lunar_eclipse(t0, t365)[1][0]}, {eclipselib.LUNAR_ECLIPSES[get_lunar_eclipse(t0, t365)[1][0]]}")
+print(f"Lunar Eclipse Details: {get_lunar_eclipse(t0, t365)[3]}")
 

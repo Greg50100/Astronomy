@@ -145,26 +145,23 @@ def get_moon_phase(t):
         else:
             return "First Quarter"
         
-def get_lunar_eclipse(t0, t365):
-    t, y, details = eclipselib.lunar_eclipses(t0, t365, eph)
-    return t, y, details
+# def get_lunar_eclipse(t0, t365):
+#     t, y, details = eclipselib.lunar_eclipse(t0, t365, eph)
 
-# Obtenir les résultats de l'éclipse lunaire
-times, types, details = get_lunar_eclipse(t0, t365)
+#     for ti, yi in zip(t, y):
+#         print(ti.utc_strftime('%Y-%m-%d %H:%M'),
+#           'y={}'.format(yi),
+#           eclipselib.LUNAR_ECLIPSES[yi])
+        
+#     return t, y, details
 
-# Afficher les résultats
-eclipse_type_dict = {1: "Partielle", 2: "Totale"}
-for i in range(len(times)):
-    print(f"Éclipse {i+1}:")
-    print(f"  Type: {eclipse_type_dict.get(types[i], 'Inconnu')}")
-    print(f"  Temps (UTC): {times[i].utc_strftime('%Y-%m-%d %H:%M')}")
-    print(f"  Approche la plus proche (radians): {details['closest_approach_radians'][i]}")
-    print(f"  Rayon de la lune (radians): {details['moon_radius_radians'][i]}")
-    print(f"  Rayon de la pénombre (radians): {details['penumbra_radius_radians'][i]}")
-    print(f"  Rayon de l'ombre (radians): {details['umbra_radius_radians'][i]}")
-    print(f"  Magnitude umbrale: {details['umbral_magnitude'][i]}")
-    print(f"  Magnitude pénumbrale: {details['penumbral_magnitude'][i]}")
-    print()
+
+t, y, details = eclipselib.lunar_eclipses(t0, t365, eph)
+
+for ti, yi in zip(t, y):
+    print(ti.utc_strftime('%Y-%m-%d %H:%M'),
+        'y={}'.format(yi),
+        eclipselib.LUNAR_ECLIPSES[yi])
 
 next_moonrise, next_moonset = get_next_moonrise_moonset(cherbourg, t0, t2)
 
@@ -179,6 +176,9 @@ print(f"Current Moon Phase Angle: {get_moon_phase_angle(t)} degrees")
 print(f"Current Moon Illumination: {100-get_moon_illumination(t)*100:.2f}%")
 print(f"Current Moon Libration Longitude: {get_moon_libration(t)[0]:.3f} degrees")
 print(f"Current Moon Libration Latitude: {get_moon_libration(t)[1]:.3f} degrees")
+# print(f"Minimum Moon Altitude: {get_min_moon_altitude(t0)[2]:.2f} degrees at {get_min_moon_altitude(t0)[0].strftime('%Y-%m-%d %H:%M')}")
+# print(f"Maximum Moon Altitude: {get_max_moon_altitude(t0)[2]:.2f} degrees at {get_max_moon_altitude(t0)[0].strftime('%Y-%m-%d %H:%M')}")
 print(f"Current Moon Phase: {get_moon_phase(t)}")
-print(f"Lunar Eclipse: {get_lunar_eclipse(t0, t365)[0][0].utc_strftime('%Y-%m-%d %H:%M')}, y={get_lunar_eclipse(t0, t365)[1][0]}, {eclipselib.LUNAR_ECLIPSES[get_lunar_eclipse(t0, t365)[1][0]]}")
+
+
 
