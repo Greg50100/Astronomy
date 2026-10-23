@@ -1,5 +1,10 @@
 # Astronomy
 
+> [!WARNING]
+> **Projet archivé — plus maintenu.** Ses fonctions ont été reprises dans **[Ganymede](https://greg50100.github.io/personnal-site/#/)**, la boîte à outils en ligne gratuite : [Ce soir dans le ciel](https://greg50100.github.io/personnal-site/#/astronomie/ce-soir) · [Le Soleil](https://greg50100.github.io/personnal-site/#/astronomie/soleil) · [La Lune](https://greg50100.github.io/personnal-site/#/astronomie/lune) · [Résumé des planètes](https://greg50100.github.io/personnal-site/#/astronomie/planetes).
+> Le code reste consultable en lecture seule.
+> Pour Home Assistant, voir [Celeste_HA](https://github.com/Greg50100/Celeste_HA) ; pour une application de bureau, [Celeste_App](https://github.com/Greg50100/Celeste_App).
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Description
